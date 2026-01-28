@@ -3,6 +3,7 @@ import RealTime from "./components/TimeComponent";
 import StartStopCount from "./components/StartStopCountComponent";
 import StopWatchComponet from "./components/StopWatchComponent";
 import TodosList from "./components/todoListApi/TodoList";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function App() {
   return (

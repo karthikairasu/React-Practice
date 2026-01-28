@@ -1,24 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import useTodos from "./useTodos";
+import { Button } from "react-bootstrap";
 
 export default function App() {
   const [userId, setUserId] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const selectRef = useRef<HTMLSelectElement>(null);
 
   const itemsPerPage = 5;
 
-  const { todos, loading } = useTodos(userId, currentPage, itemsPerPage);
+  const { todos, loading } = useTodos(
+    Number(userId),
+    currentPage,
+    itemsPerPage
+  );
 
   const handleSearch = () => {
     setCurrentPage(1);
+    setUserId(selectRef.current!.value);
   };
 
   return (
     <div className="container mt-3" style={{ padding: "10px" }}>
-      <select
-        onChange={(e) => setUserId(e.target.value)}
-        className="form-control w-50 d-inline"
-      >
+      <select ref={selectRef} className="form-control w-50 d-inline">
         <option value="">Choose User</option>
         <option value="1">1</option>
         <option value="2">2</option>
@@ -27,9 +31,9 @@ export default function App() {
         <option value="5">5</option>
       </select>
 
-      <button className="btn btn-info ms-2" onClick={handleSearch}>
+      <Button className="ms-2" variant="primary" onClick={handleSearch}>
         Search
-      </button>
+      </Button>
 
       {loading && <p>Loading...</p>}
 
@@ -55,7 +59,7 @@ export default function App() {
             ))
           ) : (
             <tr>
-              <td colSpan="4" className="text-center">
+              <td colSpan={4} className="text-center">
                 No Records Found
               </td>
             </tr>
@@ -78,6 +82,7 @@ export default function App() {
 
           <button
             className="btn btn-secondary"
+            disabled={todos.length === 0}
             onClick={() => setCurrentPage((prev) => prev + 1)}
           >
             Next
