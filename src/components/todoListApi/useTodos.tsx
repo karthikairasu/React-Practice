@@ -1,7 +1,14 @@
 import { useState, useEffect } from "react";
 
-const useTodos = (userId, page, limit = 5) => {
-  const [todos, setTodos] = useState([]);
+const useTodos = (userId: number, page: number, limit = 5) => {
+  interface Todo {
+    userId: number;
+    id: number;
+    title: string;
+    completed: boolean;
+  }
+
+  const [todos, setTodos] = useState<Todo[]>([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
