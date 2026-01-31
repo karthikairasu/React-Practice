@@ -5,6 +5,8 @@ import StopWatchComponet from "./components/StopWatchComponent";
 import TodosList from "./components/todoListApi/TodoList";
 import FetchUsers from "./practice/FetchUsers";
 import "bootstrap/dist/css/bootstrap.min.css";
+import SearchPosts from "./practice/SearchPosts";
+
 
 export default function App() {
   return (
@@ -13,7 +15,8 @@ export default function App() {
       <StartStopCount />
       <StopWatchComponet />
       <TodosList /> */}
-      <FetchUsers />
+      {/* <FetchUsers /> */}
+      <SearchPosts/>
     </div>
   );
 }
