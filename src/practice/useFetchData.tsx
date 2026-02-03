@@ -22,8 +22,6 @@ const useFetchData = (search?: string, id?: string) => {
           const res = await axios.get(
             `https://jsonplaceholder.typicode.com/posts/${id}`
           );
-
-          console.log(res.data);
           setPost(res.data);
         } else {
           const res = await axios.get(
