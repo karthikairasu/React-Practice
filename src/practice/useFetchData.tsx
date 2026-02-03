@@ -8,27 +8,39 @@ interface Post {
   body: string;
 }
 
-const useFetchData = (debouncingSearch: string) => {
+const useFetchData = (search?: string, id?: string) => {
   const [posts, setPosts] = useState<Post[]>([]);
+  const [post, setPost] = useState<Post | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
+      setIsLoading(true);
       try {
-        const res = await axios.get(
-          "https://jsonplaceholder.typicode.com/posts"
-        );
+        if (id) {
+          const res = await axios.get(
+            `https://jsonplaceholder.typicode.com/posts/${id}`
+          );
 
-        const filterData = res.data.filter(
-          (value: any) =>
-            value.title
-              .toLowerCase()
-              .includes(debouncingSearch.toLowerCase()) ||
-            value.id.toString().includes(String(debouncingSearch))
-        );
+          console.log(res.data);
+          setPost(res.data);
+        } else {
+          const res = await axios.get(
+            "https://jsonplaceholder.typicode.com/posts"
+          );
 
-        setPosts(filterData);
+          const filterData = search
+            ? res.data.filter(
+                (value: Post) =>
+                  value.title.toLowerCase().includes(search.toLowerCase()) ||
+                  value.id.toString().includes(String(search))
+              )
+            : res.data;
+
+          setPosts(filterData);
+        }
+
         setError(null);
       } catch {
         setError("Something went wrong while fetching data. Please try again");
@@ -37,8 +49,8 @@ const useFetchData = (debouncingSearch: string) => {
       }
     };
     fetchData();
-  }, [debouncingSearch]);
-  return { posts, isLoading, error };
+  }, [search, id]);
+  return { posts, post, isLoading, error };
 };
 
 export default useFetchData;

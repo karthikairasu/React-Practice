@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Table, Container } from "react-bootstrap";
+import { Table, Container, Spinner } from "react-bootstrap";
 import useFetchData from "./useFetchData";
+import { Link } from "react-router-dom";
 
 const SearchPosts = () => {
   const [searchInput, setSearchInput] = useState("");
@@ -25,7 +26,7 @@ const SearchPosts = () => {
           placeholder="Search Post"
           onChange={(e) => setSearchInput(e.target.value)}
         />
-        {isLoading && <h3>Loading...</h3>}
+        {isLoading && <h3>Loading....</h3>}
         {error && <h3 className="text-danger">{error}</h3>}
         <Table bordered striped variant="dark">
           <thead>
@@ -42,8 +43,15 @@ const SearchPosts = () => {
                 <tr key={value.id}>
                   <td>{value.userId}</td>
                   <td>{value.id}</td>
-                  <td className="text-truncate">{value.title}</td>
-                  <td className="text-truncate">{value.body}</td>
+                  <td className="">
+                    <Link
+                      to={`/postDetails/${value.id}`}
+                      style={{ color: "#fff" }}
+                    >
+                      {value.title}
+                    </Link>
+                  </td>
+                  <td className="">{value.body}</td>
                 </tr>
               ))
             ) : (
