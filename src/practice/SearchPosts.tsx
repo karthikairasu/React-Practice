@@ -17,19 +17,10 @@ const SearchPosts = () => {
     return () => clearTimeout(timer);
   }, [searchInput]);
 
-  // 👉 Initial full-page loading
-  if (isLoading && posts.length === 0) {
-    return (
-      <div className="d-flex justify-content-center align-items-center vh-100">
-        <Spinner animation="border" variant="primary" />
-      </div>
-    );
-  }
-
   return (
     <>
       <Container>
-        <div>
+        <div style={{ position: "relative" }}>
           <input
             type="text"
             className="form-control my-2"
@@ -40,7 +31,7 @@ const SearchPosts = () => {
           {isLoading && posts.length > 0 && (
             <div
               className="text-center my-2"
-              style={{ position: "absolute", right: "70px", top: "5px" }}
+              style={{ position: "absolute", right: "20px", top: "-2px" }}
             >
               <Spinner animation="grow" size="sm" /> Searching
             </div>
